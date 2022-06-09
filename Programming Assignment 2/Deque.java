@@ -1,16 +1,14 @@
-import org.w3c.dom.Node;
-
 import java.util.Iterator;
 
 public class Deque<Item> implements Iterable<Item> {
     public Node<Item> sentinel;
     public int size;
 
-    private static class Node<Pokemon>{
+    private static class Node<Pokemon> {
         private Pokemon item;
         private Node<Pokemon> next;
         private Node<Pokemon> before;
-        private Node (Pokemon i, Node<Pokemon> n, Node<Pokemon> b) {
+        private Node(Pokemon i, Node<Pokemon> n, Node<Pokemon> b) {
             this.item = i;
             this.next = n;
             this.before = b;
@@ -53,9 +51,10 @@ public class Deque<Item> implements Iterable<Item> {
     public Item removeFirst() {
         if (size == 0) {
             return null;
-        }else{
+        } else {
             Item first = this.sentinel.next.item;
             this.sentinel.next = this.sentinel.next.next;
+            size -= 1;
             return first;
         }
     }
@@ -64,9 +63,10 @@ public class Deque<Item> implements Iterable<Item> {
     public Item removeLast() {
         if (size == 0) {
             return null;
-        }else {
+        } else {
             Item last = this.sentinel.before.item;
             this.sentinel.before = this.sentinel.before.before;
+            size -= 1;
             return last;
         }
     }
