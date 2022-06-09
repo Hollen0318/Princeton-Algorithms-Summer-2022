@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item> {
     public Node<Item> sentinel;
@@ -35,22 +36,30 @@ public class Deque<Item> implements Iterable<Item> {
 
     // add the item to the front
     public void addFirst(Item item) {
-        this.sentinel.next = new Node<>(item, sentinel.next, sentinel);
-        this.sentinel.next.next.before = this.sentinel.next;
-        size += 1;
+        if (item == null) {
+            throw new IllegalArgumentException("Can't add null item");
+        }else {
+            this.sentinel.next = new Node<>(item, sentinel.next, sentinel);
+            this.sentinel.next.next.before = this.sentinel.next;
+            size += 1;
+        }
     }
 
     // add the item to the back
     public void addLast(Item item) {
-        this.sentinel.before = new Node<>(item, sentinel, sentinel.before);
-        this.sentinel.before.before.next = this.sentinel.before;
-        size += 1;
+        if (item == null) {
+            throw new IllegalArgumentException("Can't add null item");
+        } else {
+            this.sentinel.before = new Node<>(item, sentinel, sentinel.before);
+            this.sentinel.before.before.next = this.sentinel.before;
+            size += 1;
+        }
     }
 
     // remove and return the item from the front
     public Item removeFirst() {
         if (size == 0) {
-            return null;
+            throw new NoSuchElementException("The deque is empty");
         } else {
             Item first = this.sentinel.next.item;
             this.sentinel.next = this.sentinel.next.next;
@@ -62,7 +71,7 @@ public class Deque<Item> implements Iterable<Item> {
     // remove and return the item from the back
     public Item removeLast() {
         if (size == 0) {
-            return null;
+            throw new NoSuchElementException("The deque is empty");
         } else {
             Item last = this.sentinel.before.item;
             this.sentinel.before = this.sentinel.before.before;
@@ -84,12 +93,16 @@ public class Deque<Item> implements Iterable<Item> {
             return current != null;
         }
         public void remove(){
-            /*Not supported*/
+            throw new UnsupportedOperationException("Not supported");
         }
         public Item next() {
-            Item it = current.item;
-            current = current.next;
-            return it;
+            if (size == 0) {
+                throw new NoSuchElementException("Deque is empty");
+            } else {
+                Item it = current.item;
+                current = current.next;
+                return it;
+            }
         }
     }
 
