@@ -1,10 +1,27 @@
+import org.w3c.dom.Node;
+
 import java.util.Iterator;
 
 public class Deque<Item> implements Iterable<Item> {
+    public Node<Item> sentinel;
+    public int size;
+
+    private static class Node<Pokemon>{
+        private Pokemon item;
+        private Node<Pokemon> next;
+        private Node<Pokemon> before;
+        private Node (Pokemon i, Node<Pokemon> n, Node<Pokemon> b) {
+            this.item = i;
+            this.next = n;
+            this.before = b;
+        }
+    }
 
     // construct an empty deque
     public Deque() {
+        sentinel = new Node<>(null, null, null);
 
+        size = 0;
     }
 
     // is the deque empty?
