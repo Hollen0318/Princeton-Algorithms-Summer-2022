@@ -20,38 +20,55 @@ public class Deque<Item> implements Iterable<Item> {
     // construct an empty deque
     public Deque() {
         sentinel = new Node<>(null, null, null);
-
+        sentinel.next = sentinel;
+        sentinel.before = sentinel;
         size = 0;
     }
 
     // is the deque empty?
     public boolean isEmpty() {
-        return false;
+        return this.size == 0;
     }
 
     // return the number of items on the deque
     public int size() {
-        return 0;
+        return this.size;
     }
 
     // add the item to the front
     public void addFirst(Item item) {
-
+        this.sentinel.next = new Node<>(item, sentinel.next, sentinel);
+        this.sentinel.next.next.before = this.sentinel.next;
+        size += 1;
     }
 
     // add the item to the back
     public void addLast(Item item) {
-
+        this.sentinel.before = new Node<>(item, sentinel, sentinel.before);
+        this.sentinel.before.before.next = this.sentinel.before;
+        size += 1;
     }
 
     // remove and return the item from the front
     public Item removeFirst() {
-        return new Item;
+        if (size == 0) {
+            return null;
+        }else{
+            Item first = this.sentinel.next.item;
+            this.sentinel.next = this.sentinel.next.next;
+            return first;
+        }
     }
 
     // remove and return the item from the back
     public Item removeLast() {
-        return new Item;
+        if (size == 0) {
+            return null;
+        }else {
+            Item last = this.sentinel.before.item;
+            this.sentinel.before = this.sentinel.before.before;
+            return last;
+        }
     }
 
     // return an iterator over items in order from front to back
