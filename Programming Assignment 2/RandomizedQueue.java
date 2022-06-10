@@ -1,10 +1,9 @@
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import
+import java.util.*;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
     public Node<Item> sentinel;
     public int size;
+    private int itid = -1;
     private static class Node<Pokemon> {
         private Pokemon item;
         private Node<Pokemon> next;
@@ -30,25 +29,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return this.size;
     }
 
-    //    public void addFirst(Item item) {
-//        if (item == null) {
-//            throw new IllegalArgumentException("Can't add null item");
-//        }else {
-//            this.sentinel.next = new Node<>(item, sentinel.next, sentinel);
-//            this.sentinel.next.next.before = this.sentinel.next;
-//            size += 1;
-//        }
-//    }
-//
-//    public void addLast(Item item) {
-//        if (item == null) {
-//            throw new IllegalArgumentException("Can't add null item");
-//        } else {
-//            this.sentinel.before = new Node<>(item, sentinel, sentinel.before);
-//            this.sentinel.before.before.next = this.sentinel.before;
-//            size += 1;
-//        }
-//    }
     public void enqueue(Item item) {
         if (item == null) {
             throw new IllegalArgumentException("Can't add null item");
@@ -59,6 +39,49 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
     }
 
+    public Item deque(Item item) {
+        Random rand = new Random();
+        Node<Item> pt = this.sentinel;
+        int id = rand.nextInt(this.size);
+        for (int i = 0; i < size; i += 1) {
+            if (i == id) {
+                pt.before.next = pt.next;
+                pt.next.before = pt.before;
+                break;
+            }else{
+                pt = pt.next;
+            }
+        }
+        pt.next = null;
+        pt.before = null;
+        return pt.item;
+    }
+
+    public Item sample() {
+        Random rand = new Random();
+        Node<Item> pt = this.sentinel;
+        int id = rand.nextInt(this.size);
+        for (int i = 0; i < size; i += 1) {
+            if (i == id) {
+                break;
+            }else{
+                pt = pt.next;
+            }
+        }
+        return pt.item;
+    }
+
+    private Item getIndex(int id) {
+        Node<Item> pt = this.sentinel;
+        for (int i = 0; i < size; i += 1) {
+            if (i == id) {
+                break;
+            }else{
+                pt = pt.next;
+            }
+        }
+        return pt.item;
+    }
     // return an iterator over items in order from front to back
     public Iterator<Item> iterator() {
         return new ListIterator();
@@ -75,18 +98,22 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             throw new UnsupportedOperationException("Not supported");
         }
         public Item next() {
+            itid += 1;
+            Integer[] array = new Integer[size];
+            for (int i = 0; i < size; i++) {
+                array[i] = i;
+            }
+            List<Integer> list = Arrays.asList(array);
+            Collections.shuffle(list);
+            list.toArray(array);
+//            System.out.println(Arrays.toString(array));
             if (size == 0) {
                 throw new NoSuchElementException("Deque is empty");
             } else {
-                Item it = current.item;
-                current = current.next;
-                return it;
+                return getIndex(array[itid]);
             }
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println("hello");
-    }
 
 }
