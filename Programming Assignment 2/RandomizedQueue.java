@@ -72,7 +72,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private Item getIndex(int id) {
-        Node<Item> pt = this.sentinel;
+        Node<Item> pt = this.sentinel.next;
         for (int i = 0; i < size; i += 1) {
             if (i == id) {
                 break;
@@ -82,30 +82,34 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
         return pt.item;
     }
+    private Integer[] createArray(int sz) {
+        Integer[] array = new Integer[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = i;
+        }
+        List<Integer> list = Arrays.asList(array);
+        Collections.shuffle(list);
+        list.toArray(array);
+        System.out.println("The array is " + Arrays.toString(array));
+        return array;
+    }
     // return an iterator over items in order from front to back
     public Iterator<Item> iterator() {
         return new ListIterator();
     }
 
     private class ListIterator implements Iterator<Item> {
-        private Node<Item> current = sentinel;
-
+        private Node<Item> current = sentinel.next;
+        Integer[] array = createArray(size);
         @Override
         public boolean hasNext() {
-            return current != null;
+            return itid < size-1;
         }
         public void remove(){
             throw new UnsupportedOperationException("Not supported");
         }
         public Item next() {
             itid += 1;
-            Integer[] array = new Integer[size];
-            for (int i = 0; i < size; i++) {
-                array[i] = i;
-            }
-            List<Integer> list = Arrays.asList(array);
-            Collections.shuffle(list);
-            list.toArray(array);
 //            System.out.println(Arrays.toString(array));
             if (size == 0) {
                 throw new NoSuchElementException("Deque is empty");
@@ -115,5 +119,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
     }
 
-
+    public static void main(String[] args) {
+//        RandomizedQueue<Integer> RdQueue = new RandomizedQueue<Integer>();
+//        RdQueue.enqueue(10);
+//        RdQueue.enqueue(9);
+//        RdQueue.enqueue(8);
+//        RdQueue.enqueue(7);
+//        for (Integer i : RdQueue) {
+//            System.out.println(i);
+//        }
+    }
 }

@@ -86,11 +86,11 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private class ListIterator implements Iterator<Item> {
-        private Node<Item> current = sentinel;
+        private Node<Item> current = sentinel.next;
 
         @Override
         public boolean hasNext() {
-            return current != null;
+            return current.item != null;
         }
         public void remove(){
             throw new UnsupportedOperationException("Not supported");
@@ -108,7 +108,15 @@ public class Deque<Item> implements Iterable<Item> {
 
     // unit testing (required)
     public static void main(String[] args) {
-        System.out.println("hello");
+        Deque<Integer> IntDeque = new Deque<Integer>();
+        IntDeque.addFirst(5);
+        IntDeque.addFirst(4);
+        IntDeque.addFirst(3);
+        IntDeque.addFirst(2);
+        IntDeque.addFirst(1);
+        IntDeque.addLast(6);
+        for (Integer a : IntDeque) {
+            System.out.println(a);
+        }
     }
-
 }
