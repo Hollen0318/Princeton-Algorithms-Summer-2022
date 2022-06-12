@@ -62,6 +62,7 @@ public class Deque<Item> implements Iterable<Item> {
             throw new NoSuchElementException("The deque is empty");
         } else {
             Item first = this.sentinel.next.item;
+            this.sentinel.next.next.before = this.sentinel;
             this.sentinel.next = this.sentinel.next.next;
             size -= 1;
             return first;
@@ -74,6 +75,7 @@ public class Deque<Item> implements Iterable<Item> {
             throw new NoSuchElementException("The deque is empty");
         } else {
             Item last = this.sentinel.before.item;
+            this.sentinel.before.before.next = this.sentinel;
             this.sentinel.before = this.sentinel.before.before;
             size -= 1;
             return last;
@@ -116,7 +118,38 @@ public class Deque<Item> implements Iterable<Item> {
         IntDeque.addFirst(1);
         IntDeque.addLast(6);
         for (Integer a : IntDeque) {
-            System.out.println(a);
+            System.out.print(a+" ");
         }
+        System.out.print("\nThe size is " + IntDeque.size() + " And empty is " + IntDeque.isEmpty());
+        System.out.println("\nRemove the value of " + IntDeque.removeLast());
+        for (Integer a : IntDeque) {
+            System.out.print(a+" ");
+        }
+        System.out.print("\nThe size is " + IntDeque.size() + " And empty is " + IntDeque.isEmpty());
+        System.out.println("\nRemove the value of " + IntDeque.removeFirst());
+        for (Integer a : IntDeque) {
+            System.out.print(a+" ");
+        }
+        System.out.print("\nThe size is " + IntDeque.size() + " And empty is " + IntDeque.isEmpty());
+        System.out.println("\nRemove the value of " + IntDeque.removeFirst());
+        for (Integer a : IntDeque) {
+            System.out.print(a+" ");
+        }
+        System.out.print("\nThe size is " + IntDeque.size() + " And empty is " + IntDeque.isEmpty());
+        System.out.println("\nRemove the value of " + IntDeque.removeLast());
+        for (Integer a : IntDeque) {
+            System.out.print(a+" ");
+        }
+        System.out.print("\nThe size is " + IntDeque.size() + " And empty is " + IntDeque.isEmpty());
+        System.out.println("\nRemove the value of " + IntDeque.removeFirst());
+        for (Integer a : IntDeque) {
+            System.out.print(a+" ");
+        }
+        System.out.print("\nThe size is " + IntDeque.size() + " And empty is " + IntDeque.isEmpty());
+        System.out.println("\nRemove the value of " + IntDeque.removeFirst());
+        for (Integer a : IntDeque) {
+            System.out.print(a+" ");
+        }
+        System.out.print("\nThe size is " + IntDeque.size() + " And empty is " + IntDeque.isEmpty());
     }
 }

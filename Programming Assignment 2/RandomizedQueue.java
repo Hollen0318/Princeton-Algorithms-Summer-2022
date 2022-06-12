@@ -39,9 +39,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
     }
 
-    public Item deque(Item item) {
+    public Item deque() {
         Random rand = new Random();
-        Node<Item> pt = this.sentinel;
+        Node<Item> pt = this.sentinel.next;
         int id = rand.nextInt(this.size);
         for (int i = 0; i < size; i += 1) {
             if (i == id) {
@@ -54,12 +54,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
         pt.next = null;
         pt.before = null;
+        size -= 1;
         return pt.item;
     }
 
     public Item sample() {
         Random rand = new Random();
-        Node<Item> pt = this.sentinel;
+        Node<Item> pt = this.sentinel.next;
         int id = rand.nextInt(this.size);
         for (int i = 0; i < size; i += 1) {
             if (i == id) {
@@ -90,16 +91,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         List<Integer> list = Arrays.asList(array);
         Collections.shuffle(list);
         list.toArray(array);
-        System.out.println("The array is " + Arrays.toString(array));
+//        System.out.println("The array is " + Arrays.toString(array));
         return array;
     }
     // return an iterator over items in order from front to back
     public Iterator<Item> iterator() {
+        itid = -1;
         return new ListIterator();
     }
 
     private class ListIterator implements Iterator<Item> {
-        private Node<Item> current = sentinel.next;
         Integer[] array = createArray(size);
         @Override
         public boolean hasNext() {
@@ -120,13 +121,26 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-//        RandomizedQueue<Integer> RdQueue = new RandomizedQueue<Integer>();
-//        RdQueue.enqueue(10);
-//        RdQueue.enqueue(9);
-//        RdQueue.enqueue(8);
-//        RdQueue.enqueue(7);
-//        for (Integer i : RdQueue) {
-//            System.out.println(i);
-//        }
+        RandomizedQueue<Integer> RdQueue = new RandomizedQueue<Integer>();
+        RdQueue.enqueue(10);
+        RdQueue.enqueue(9);
+        RdQueue.enqueue(8);
+        RdQueue.enqueue(7);
+        RdQueue.enqueue(6);
+        for (Integer i : RdQueue) {
+            System.out.print(i + " ");
+        }
+        System.out.println("\nRemove random value of " + RdQueue.deque() + " Empty test is " + RdQueue.isEmpty());
+        for (Integer i : RdQueue) {
+            System.out.print(i + " ");
+        }
+        System.out.println("\nRemove random value of " + RdQueue.deque() + " Empty test is " + RdQueue.isEmpty());
+        for (Integer i : RdQueue) {
+            System.out.print(i + " ");
+        }
+        System.out.println("\nRemove random value of " + RdQueue.deque() + " Empty test is " + RdQueue.isEmpty());
+        for (Integer i : RdQueue) {
+            System.out.print(i + " ");
+        }
     }
 }
